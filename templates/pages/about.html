@@ -1,0 +1,136 @@
+{% extends 'base.html' %} {% block title %}About{% endblock %}
+{% block content %}
+{% load static %}
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>About Us</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">About Us</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+<!-- Ingredient about start -->
+<div class="about-car content-area-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6">
+                <div class="about-car-photo">
+                    <div id="carDetailsSlider" class="carousel car-details-sliders slide">
+                        <!-- main slider carousel items -->
+                        <!-- Need to resize the imgs to match the size of anise.jpg -->
+                        <div class="carousel-inner">
+                            <div class="active item carousel-item" data-slide-number="0">
+                                <img src="{% static 'img/anise.jpg' %}" class="img-fluid" alt="slider-car">
+                            </div>
+                            <div class="item carousel-item" data-slide-number="1">
+                                <img src="{% static 'img/anise.jpg' %}"  class="img-fluid" alt="slider-car">
+                            </div>
+                            <div class="item carousel-item" data-slide-number="2">
+                                <img src="{% static 'img/anise.jpg' %}" class="img-fluid" alt="slider-car">
+                            </div>
+                        </div>
+
+                        <!-- main slider carousel nav controls -->
+                        <ul class="carousel-indicators car-properties list-inline nav nav-justified">
+                            <li class="list-inline-item active">
+                                <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#carDetailsSlider">
+                                    <img src="img/anise.jpg" class="img-fluid" alt="small-ingredient">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a id="carousel-selector-1" data-slide-to="1" data-target="#carDetailsSlider">
+                                    <img src="img/anise.jpg" class="img-fluid" alt="small-ingredient">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a id="carousel-selector-2" data-slide-to="2" data-target="#carDetailsSlider">
+                                    <img src="img/anise.jpg" class="img-fluid" alt="small-ingredient">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-6 align-self-center">
+                <div class="best-used-car">
+                    <h3>Welcome to <span>Global Sweet Bonds</span></h3>
+                    <p>
+                        Welcome to a delectable journey around the globe! At GLOBAL SWEET
+                        BONDS, we're on a mission to explore the sweet side of every
+                        culture. Our passion lies in discovering the rich tapestry of
+                        desserts that grace tables from Tokyo to Buenos Aires. Join us as we
+                        map out the world of sweets, connecting diverse culinary traditions
+                        through the common thread of single ingredients.
+                      </p>
+                      <p class="mb-0">
+                        From the comforting warmth of cinnamon in Mexico to the tropical
+                        allure of coconut in the Philippines, we invite you to savor the
+                        flavors that transcend borders. This is not just a collection of
+                        recipes; it's a celebration of the shared joy that comes with every
+                        delightful bite. Come, explore, and experience the sweet symphony of
+                        global dessert connections.
+                      </p>
+                      <br />
+                      <p class="mb-0">
+                        <b>Disclaimer</b>
+                        <i
+                          >This is a project for me connecting ingredients together and
+                          really a base to showcase my Django skills as well as serve as a
+                          part of a larger project later on exploring relational data. So,
+                          aside from this text here, I have asked ChatGPT to generate
+                          content describing the desserts and the project.Some of the chefs
+                          are AI generated while the rest are from unsplash.
+                          Shout out to the folks at <a href = "https://www.tasteatlas.com/">TasteAtlas</a> for the inspiration, the data and some photos.
+                        </i>
+                      </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service center end -->
+
+
+
+<!-- Our team start -->
+<div class="our-team content-area">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1>Featured <span>Chefs</span></h1>
+            <p>Crafting Sweet Dreams: Meet Our Team of Culinary Artisans</p>
+        </div>
+        <!-- Slick slider area start -->
+        <div class="slick-slider-area clearfix">
+            <div class="row slick-carousel" data-slick='{"slidesToShow": 4, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
+            {% for chef in chefs %}
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="photo">
+                            <a href="#">
+                                <img src="{{chef.photo.url}}" class="img-fluid">
+                            </a>
+
+
+                        </div>
+                        <div class="details">
+                            <h4><a href="team-detail.html">{{chef.full_name}}</a></h4>
+                            <h5>{{chef.title}}</h5>
+                            <p>{{chef.locale}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our team end -->
+
+
+{% endblock %}
