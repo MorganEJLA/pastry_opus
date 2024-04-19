@@ -13,9 +13,9 @@ class ChefAdmin(admin.ModelAdmin):
 
     thumbnail.short_description = "Icon"
 
-    list_display = ("id", "full_name","thumbnail","locale", "title", "icon_thumbnail")
-    list_display_links = ("id", "full_name")
-    search_fields = ("full_name", "locale")
-    list_filter = ("locale",)
+    list_display = ("id", "full_name","thumbnail", "title", "icon_thumbnail")
+    list_display_links = ("id", "full_name",)
+    search_fields = ("full_name",)
+
 
 admin.site.register(Chef, ChefAdmin)

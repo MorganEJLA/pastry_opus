@@ -23,3 +23,6 @@ def ingredients(request):
 
 def contact(request):
     return render(request, "pages/contact.html")
+
+def locale(request):
+    return render(request, "pages/locale.html")

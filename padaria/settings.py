@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     #local apps
     "pages.apps.PagesConfig",
+    "desserts.apps.DessertsConfig",
+    #Third Party
+    "multiselectfield",
 ]
 
 MIDDLEWARE = [
