@@ -26,9 +26,9 @@ class DessertAdmin(admin.ModelAdmin):
     get_ingredient_names.short_description = "Ingredient Name"
     get_locale_names.short_description = "Locale Name"
 
-    list_display = ("id", "dessert_name", "get_locale_names", "dessert_thumbnail", "get_ingredient_names")
-    list_display_links = ("id", "dessert_name")
-    search_fields = ("dessert_name",)
+    list_display = ("id", "dessert_name", "get_locale_names", "dessert_thumbnail", "get_ingredient_names", "is_featured")
+    list_display_links = ("id", "dessert_name", "get_locale_names")
+    search_fields = ("dessert_name", "locale_name__name", "featured_ingredient__name")
     list_filter = ("dessert_name",)
     autocomplete_fields = ["locale_name", "featured_ingredient"]
     ordering = ("locale_name", "dessert_name")
