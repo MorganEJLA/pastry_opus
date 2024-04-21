@@ -7,6 +7,7 @@ def home(request):
     chefs = Chef.objects.all()
     featured_desserts = Dessert.objects.filter(is_featured=True).order_by("dessert_name")
     fried_dough_desserts = Dessert.objects.filter(category="Fried Dough").order_by("dessert_name")
+
     data = {
         "chefs": chefs,
         "featured_desserts": featured_desserts,
@@ -31,3 +32,4 @@ def contact(request):
 
 def locale(request):
     return render(request, "pages/locale.html")
+

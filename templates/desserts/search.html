@@ -1,0 +1,147 @@
+{% extends "base.html"%}{% block title %} | Search Result
+{% endblock %}{% block content %}
+
+<!-- Banner start -->
+<div class="sub-banner overview-bgi">
+  <div class="container breadcrumb-area">
+    <div class="breadcrumb-areas">
+      <h1>Search Results</h1>
+      <ul class="breadcrumbs">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li class="active">Search</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Banner end -->
+<!-- Search box 3 start -->
+<div class="search-box-3 sb-7 bg-active">
+  <div class="container">
+    <div class="search-area-inner">
+      <div class="search-contents">
+        <form method="GET" action="{% url 'search' %}">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+              <div class="form-group">
+                <select class="selectpicker search-fields" name="featured_ingredient">
+                  <option selected="selected" disabled="disabled">Ingredient</option>
+                  {% for featured_ingredient in featured_ingredient_search %}
+                    <option value= "{{featured_ingredient}}">{{featured_ingredient}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+              <div class="form-group">
+                <select class="selectpicker search-fields" name="country_name">
+                  <option selected = "selected" disabled="disabled">
+                    Select Country
+                  </option>
+                  {% for country_name in country_name_search %}
+                  <option value = {{country_name}}>{{country_name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+              <div class="form-group">
+                <select
+                  class="selectpicker search-fields"
+                  name="additional_ingredient"
+                >
+                  <option selected="selected" disabled="disabled">
+                    Select Additional Ingredient
+                  </option>
+                  {% for additional_ingredient in additional_ingredient_search%}
+                  <option value = {{additional_ingredient}}>{{additional_ingredient}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+              <div class="form-group">
+                <button class="btn btn-block button-theme btn-md">
+                  <i class="fa fa-search"></i>Find
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Search box 3 end -->
+
+<!-- Featured car start -->
+<div class="featured-car content-area">
+  <div class="container">
+    <!-- Main title -->
+    <div class="main-title">
+      <h1>Here's your <span>Desserts</span></h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="row">
+        {% for dessert in desserts %}
+        <div class="col-lg-4 col-md-6">
+          <div class="car-box">
+            <div class="car-thumbnail">
+              <a href="car-details.html" class="car-img" >
+
+                <img
+                  class="d-block w-100"
+                  src="{{dessert.dessert_photo.url}}"
+                  alt="dessert"
+                  style="min-height: 262px; max-height: 262px"
+                />
+                <div class="facilities-list clearfix">
+                  <ul>
+
+                  </ul>
+                </div>
+              </a>
+              <div class="carbox-overlap-wrapper">
+                <div class="overlap-box">
+                  <div class="overlap-btns-area">
+                    <div class="car-magnify-gallery">
+                      <a
+                        href="{{dessert.dessert_photo.url}}"
+                        class="overlap-btn"
+                      >
+                        <i class="fa fa-expand"></i>
+                        <img
+                          class="hidden"
+                          src="{{dessert.dessert_photo.url}}"
+                        />
+                      </a>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="detail">
+              <h1 class="title">
+                <a href="{%url "dessert_detail" dessert.id %}">{{dessert.dessert_name}}</a>
+              </h1>
+              <div class="location">
+                <a href="car-details.html">
+                  <i class="flaticon-pin"></i> {{ dessert.locale_name.all|join:", " }}
+                </a>
+              </div>
+            </div>
+            <div class="footer clearfix">
+              <div class="pull-left ratings days">
+                <p class="cartype"> {{ dessert.featured_ingredient.all|join:", " }}</p>
+              </div>
+              <div class="pull-right">
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- Featured car end -->
+{% endblock %}
