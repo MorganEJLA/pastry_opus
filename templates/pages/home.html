@@ -63,7 +63,7 @@
     </div>
     <!-- Search box 3 start -->
     <div class="search-box-4 sb-8">
-      <form action="#" method="">
+      <form action="{% url 'search' %}" method="">
         <div class="form-group">
           <input
             type="text"
@@ -72,68 +72,26 @@
             class="form-control"
           />
         </div>
+
         <div class="form-group">
-          <select class="form-control search-fields" name="select-brand">
-            <option selected="true" disabled="disabled">
-              Ingredient Types
-            </option>
-            <option>Fruit & Nuts</option>
-            <option>Chocolate & Cocoa</option>
-            <option>Spices & Herbs</option>
-            <option>Eggs and Egg Products</option>
-            <option>Flavorings & Extracts</option>
-            <option>Dairy & Alternatives</option>
-            <option>Flour & Grains</option>
-            <option>Sugar & Sweeteners</option>
+          <select class="form-control search-fields" name="category">
+            <option value = "true" disabled selected>Category</option>
+            {% for category in category_search %}
+              <option value = "{{category}}">{{category}}</option>
+            {% endfor %}
+
           </select>
         </div>
         <div class="form-group">
-          <select class="form-control search-fields" name="select-make">
-            <option selected="true" disabled="disabled">
-              Dessert Categories
-            </option>
-            <option>Cakes</option>
-            <option>Pies & Tarts</option>
-            <option>Cookies & Bars</option>
-            <option>Pastries</option>
-            <option>Puddings & Custards</option>
-            <option>Frozen</option>
-            <option>Confections & Candies</option>
-            <option>Fruit Desserts</option>
-            <option>Specialty Desserts</option>
-            <option>Fried Dough</option>
+          <select class="form-control search-fields" name="locale_name_search">
+            <option selected="" disabled="disabled" selected="true">Locale</option>
+            {% for locale in locale_name_search %}
+              <option value ="{{locale}}">{{locale}}</option>
+            {% endfor %}
+
           </select>
         </div>
-        <div class="form-group">
-          <select class="form-control search-fields" name="select-location">
-            <option selected="true" disabled="disabled">Location</option>
-            <option>North America</option>
-            <option>Caribbean</option>
-            <option>South America</option>
-            <option>Europe</option>
-            <option>Middle East</option>
-            <option>Balkans</option>
-            <option>Asia</option>
-            <option>North Africa</option>
-            <option>Sub-Saharan Africa</option>
-            <option>Oceania</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <select class="form-control search-fields" name="select-type">
-            <option selected="true" disabled="disabled">Flavor Profile</option>
-            <option>Sweet</option>
-            <option>Fruity</option>
-            <option>Chocolate</option>
-            <option>Creamy</option>
-            <option>Citrus</option>
-            <option>Nutty</option>
-            <option>Spiced</option>
-            <option>Herbal</option>
-            <option>Savory-Sweet</option>
-            <option>Floral</option>
-          </select>
-        </div>
+
 
         <div class="form-group">
           <button class="btn btn-block button-theme btn-md">
@@ -188,29 +146,64 @@
           <div class="car-box-3">
             <div class="car-thumbnail">
               <a href="{% url 'dessert_detail' dessert.id %}" class="car-img">
-                <div class="tag">
-                  <a href = "{{ dessert.recipe_link }}" target="_blank">Get Recipe</div>
+
                 <img
                   class="d-block w-100"
-                  src="{{dessert.dessert_photo_1.url}}"
+                  src="{{dessert.dessert_photo.url}}"
                   alt="dessert-photo"
                   style="min-height: 262px; max-height: 262px"
                 />
               </a>
+              <div class="carbox-overlap-wrapper">
+                <div class="overlap-box">
+                  <div class="overlap-btns-area">
+                    <div class="car-magnify-gallery">
+                      <a
+                        href="{{ dessert.dessert_photo.url}}"
+                        class="overlap-btn">
 
+                        <i class="fa fa-expand"></i>
+                        <img class="hidden" src="{{dessert.dessert_photo.url}}"
+                        style="min-height:262px; "
+                        />
+                      </a>
+                      {% if dessert.dessert_photo_2 %}
+                      <a href="{{dessert.dessert_photo_2.url}}" class="hidden">
+                        <img class="hidden" src="{{dessert.dessert_photo_2.url}}"
+                        style="min-height: 262px;" />
+                      </a>
+                      {% endif %}
+                      {% if dessert.dessert_photo_3 %}
+                      <a href="{{dessert.dessert_photo_3.url}}" class="hidden">
+                        <img class="hidden" src="{{dessert.dessert_photo_3.url}}" style="min-height:262px;" />
+                      </a>
+                      {% endif %}
+                      {% if dessert.dessert_photo_4 %}
+                      <a href="{{dessert.dessert_photo_4.url}}" class="hidden">
+                        <img class="hidden" src="{{dessert.dessert_photo_4.url}}"style="min-height:262px;" />
+                      </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="detail">
               <h1 class="title">
                 <a href="{% url 'dessert_detail' dessert.id  %}">{{dessert.dessert_name}}</a>
               </h1>
               <div class="location">
-                <a href="{% url "dessert_detail" dessert.id  %}">
-                  <i class="flaticon-pin"></i>{{dessert.country_name}}
+                <a href="{% url 'dessert_detail' dessert.id  %}">
+                  <i class="flaticon-pin"></i>{{ dessert.locale_name.all|join:", " }}
                 </a>
               </div>
               <ul class="facilities-list clearfix">
-                <li>{{dessert.featured_ingredient}}</li>
-              </ul>
+
+                {% for ingredient in dessert.featured_ingredient.all %}
+                <li>{{ ingredient.name }}</li>
+                {% endfor %}
+
+            </ul>
             </div>
           </div>
         </div>
@@ -241,59 +234,30 @@
     <div class="row">
       <!-- Loop through featured desserts -->
       {% for dessert in fried_dough_desserts %}
-      <div class="col-lg-4 col-md-6">
-        <div class="car-box">
-          <div class="car-thumbnail">
-            <a href="#" class="car-img">
-              <img class="d-block w-100" src="{{ dessert.dessert_photo.url }}" style="min-height:262px; max-height:262px" />
-            </div>
-            </a>
-          <div class="carbox-overlap-wrapper">
-            <div class="overlap-box">
-              <div class="overlap-btns-area">
-                <div class="car-magnify-gallery">
-                  <a href="{{ dessert.dessert_photo.url}}" class="overlap-btn">
-                    <i class="fa fa-expand"></i>
-                    <img class="hidden" src="{{ dessert.dessert_photo.url }}" />
-                  </a>
-                  {% if dessert.dessert_photo_1 %}
-                  <a href="{{ dessert.dessert_photo_1.url }}" class="hidden">
-                    <img class="hidden" src="{{ dessert.dessert_photo_1.url }}" />
-                  </a>
-                  {% endif %}
-                  {% if dessert.dessert_photo_2 %}
-                  <a href="{{ dessert.dessert_photo_2.url }}" class="hidden">
-                    <img class="hidden" src="{{ dessert.dessert_photo_2.url }}" />
-                  </a>
-                  {% endif %}
-                  {% if dessert.dessert_photo_3 %}
-                  <a href="{{ dessert.dessert_photo_3.url }}" class="hidden">
-                    <img class="hidden" src="{{ dessert.dessert_photo_3.url }}" />
-                  </a>
-                  {% endif %}
-                  {% if dessert.dessert_photo_4 %}
-                  <a href="{{ dessert.dessert_photo_4.url }}" class="hidden">
-                    <img class="hidden" src="{{ dessert.dessert_photo_4.url }}" />
-                  </a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="detail">
-            <h1 class="title"><a href="#">{{ dessert.dessert_name }}</a></h1>
-            <div class="location">
-              <a href="#">
-                <i class="flaticon-pin"></i>
-                {{ dessert.locale_name.all|join:", " }}
-              </a>
-            </div>
-
+  <div class="col-lg-4 col-md-6">
+    <div class="car-box">
+      <!-- This wrapping anchor tag makes the entire section clickable -->
+      <a href="{% url 'dessert_detail' dessert.id %}">
+        <div class="car-thumbnail">
+          <img
+            class="d-block w-100"
+            src="{{ dessert.dessert_photo.url }}"
+            style="min-height: 262px; max-height: 262px"
+            alt="{{ dessert.dessert_name }}"
+          />
+        </div>
+        <div class="detail">
+          <h1 class="title">{{ dessert.dessert_name }}</h1>
+          <div class="location">
+            <i class="flaticon-pin"></i>
+            {{ dessert.locale_name.all|join:", " }}
           </div>
         </div>
-      </div>
-      {% endfor %}
+      </a> <!-- End of anchor tag -->
+    </div>
+  </div>
+{% endfor %}
+
     </div>
   </div>
 </div>
@@ -353,21 +317,7 @@
 </div>
 <!-- Intro section end -->
 
-<!-- Full Page Search -->
-<div id="full-page-search">
-  <button type="button" class="close">×</button>
-  <form
-    action="https://storage.googleapis.com/theme-vessel/carhouse/index.html#"
-    class="search-header"
-  >
-    <input
-      type="search"
-      value=""
-      placeholder="type keyword(s) here. Eg: audi, benz etc"
-    />
-    <button type="submit" class="btn btn-sm button-theme">Search</button>
-  </form>
-</div>
+
 
 <!-- Car Overview Modal -->
 <div class="car-model-2">
